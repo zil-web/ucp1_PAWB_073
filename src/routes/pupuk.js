@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../database/db");
-
+const pupukRouter = require("./src/routes/pupuk");
 // Create (Menambahkan Data Pupuk)
 router.post("/add", (req, res) => {
     const { nama, jenis, harga } = req.body;
