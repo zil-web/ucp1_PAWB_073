@@ -1,11 +1,12 @@
+
 const express = require("express");
 const router = express.Router();
-const db = require("../database/db"); // Pastikan path ini benar
+const db = require("../database/db");
 
-// Tambah data pupuk (termasuk id)
+// Tambah data pupuk
 router.post("/", (req, res) => {
-    console.log(req.body); // Log body request untuk debugging
-    const { id, nama, jenis, harga } = req.body;
+    console.log(req.body); // Debugging: cek apa yang ada di req.body
+    const { id, nama, jenis, harga } = req.body;  // Pastikan data dikirim dengan nama yang benar
 
     db.query(
         "INSERT INTO pupuk (id, nama, jenis, harga) VALUES (?, ?, ?, ?)",
