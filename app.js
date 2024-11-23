@@ -12,8 +12,8 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-const contactRoutes = require('./routes/Pertaniandb'); // Pastikan path benar
-app.use('/', contactRoutes);
+const pupukRouter = require('./routes/Pertanian'); // Pastikan path benar
+app.use('/', pupukRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
