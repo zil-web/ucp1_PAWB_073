@@ -7,8 +7,8 @@ router.post("/", (req, res) => {
     const { nama, jenis, harga } = req.body;  // Pastikan data dikirim dengan nama yang benar
 
     db.query(
-        "INSERT INTO bibit (nama, jenis, harga) VALUES (?, ?, ?)",
-        [nama, jenis, harga],
+        "INSERT INTO bibit (id, nama, jenis, harga) VALUES (?, ?, ?, ?)",
+        [id, nama, jenis, harga],
         (err, result) => {
             if (err) {
                 console.error("Error inserting data: " + err.message);
