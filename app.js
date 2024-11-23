@@ -36,6 +36,11 @@ connection.connect((err) => {
 module.exports = connection;
 
 
+app.use(express.urlencoded({ extended: true })); // Memproses URL-encoded (form-data)
+app.use(express.json()); // Memproses JSON
+
+// Import routes
+const pupukRouter = require("./src/routes/pupuk");
 
 
 

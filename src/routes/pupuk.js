@@ -4,7 +4,8 @@ const db = require("../database/db"); // Pastikan path ini benar
 
 // Tambah data pupuk (termasuk id)
 router.post("/", (req, res) => {
-    const { id, nama, jenis, harga } = req.body;  // Menambahkan id sebagai input
+    console.log(req.body); // Log body request untuk debugging
+    const { id, nama, jenis, harga } = req.body;
 
     db.query(
         "INSERT INTO pupuk (id, nama, jenis, harga) VALUES (?, ?, ?, ?)",
@@ -12,7 +13,7 @@ router.post("/", (req, res) => {
         (err, result) => {
             if (err) {
                 console.error("Error inserting data: " + err.message);
-                res.status(500).send("Gagal menyimpan data pupuk.");
+                res.status(500).send("Gagal menyimpan data.");
                 return;
             }
             res.send("Data pupuk berhasil ditambahkan.");
