@@ -1,18 +1,18 @@
-const mysql = require('mysql');
+const mysql = require("mysql");
 
 const db = mysql.createConnection({
-    host: 'localhost',    // Atur sesuai dengan host MySQL Anda
-    user: 'root',         // Username MySQL
-    password: '',         // Password MySQL
-    database: 'pertanian' // Nama database yang Anda gunakan
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "pertanian",
 });
 
 db.connect((err) => {
-    if (err) {
-        console.error("Error connecting to database: " + err.message);
-    } else {
-        console.log("Connected to the database!");
-    }
+  if (err) {
+    console.error("Database connection failed: " + err.message);
+    return;
+  }
+  console.log("Database connected.");
 });
 
-module.exports = db;
+module.exports = db; // Ekspor koneksi database
