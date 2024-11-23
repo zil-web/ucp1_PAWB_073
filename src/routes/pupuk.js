@@ -2,17 +2,17 @@ const express = require("express");
 const router = express.Router();
 const db = require("../database/db"); // Pastikan path ini benar
 
-// Tambah data pupuk
+// Tambah data pupuk (termasuk id)
 router.post("/", (req, res) => {
-    const { nama, jenis, harga } = req.body;
+    const { id, nama, jenis, harga } = req.body;  // Menambahkan id sebagai input
 
     db.query(
-        "INSERT INTO pupuk (nama, jenis, harga) VALUES (?, ?, ?)",
-        [nama, jenis, harga],
+        "INSERT INTO pupuk (id, nama, jenis, harga) VALUES (?, ?, ?, ?)",
+        [id, nama, jenis, harga],
         (err, result) => {
             if (err) {
                 console.error("Error inserting data: " + err.message);
-                res.status(500).send("Gagal menyimpan data.");
+                res.status(500).send("Gagal menyimpan data pupuk.");
                 return;
             }
             res.send("Data pupuk berhasil ditambahkan.");
@@ -25,10 +25,43 @@ router.get("/", (req, res) => {
     db.query("SELECT * FROM pupuk", (err, results) => {
         if (err) {
             console.error("Error fetching data: " + err.message);
-            res.status(500).send("Gagal mengambil data.");
+            res.status(500).send("Gagal mengambil data pupuk.");
             return;
         }
         res.render("pupuk", { pupuk: results });
+    });
+});
+
+// Update data pupuk
+router.post("/update/:id", (req, res) => {
+    const { id } = req.params;
+    const { nama, jenis, harga } = req.body;
+
+    db.query(
+        "UPDATE pupuk SET nama = ?, jenis = ?, harga = ? WHERE id = ?",
+        [nama, jenis, harga, id],
+        (err, result) => {
+            if (err) {
+                console.error("Error updating data: " + err.message);
+                res.status(500).send("Gagal memperbarui data pupuk.");
+                return;
+            }
+            res.send("Data pupuk berhasil diperbarui.");
+        }
+    );
+});
+
+// Delete data pupuk
+router.post("/delete/:id", (req, res) => {
+    const { id } = req.params;
+
+    db.query("DELETE FROM pupuk WHERE id = ?", [id], (err, result) => {
+        if (err) {
+            console.error("Error deleting data: " + err.message);
+            res.status(500).send("Gagal menghapus data pupuk.");
+            return;
+        }
+        res.send("Data pupuk berhasil dihapus.");
     });
 });
 
