@@ -1,20 +1,20 @@
-require('dotenv').config();
-const express = require('express');
-const app = express();
-const port = process.env.PORT;
+const express = require("express");
+const bodyParser = require("body-parser");
+const pupukRouter = require("./routes/pupuk");
+const bibitRouter = require("./routes/bibit");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Middleware untuk parsing form data
+const app = express();
+
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 // Routes
-app.get("/", (req, res) => {
-    res.render("index");
-});
+app.use("/pupuk", pupukRouter);
+app.use("/bibit", bibitRouter);
 
-const pupukRouter = require('./routes/Pertanian'); // Pastikan path benar
-app.use('/', pupukRouter);
-
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+// Jalankan Server
+app.listen(8080, () => {
+    console.log("Server berjalan di http://localhost:8080");
 });
