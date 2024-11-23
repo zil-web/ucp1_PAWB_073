@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../database/db");
-const pupukRouter = require("./src/routes/pupuk");
-// Create (Menambahkan Data Pupuk)
-router.post("/add", (req, res) => {
+const db = require("../database/db"); // Pastikan path ini benar
+
+// Tambah data pupuk
+router.post("/", (req, res) => {
     const { nama, jenis, harga } = req.body;
 
     db.query(
@@ -11,60 +11,24 @@ router.post("/add", (req, res) => {
         [nama, jenis, harga],
         (err, result) => {
             if (err) {
-                console.error("Error saat menambahkan data pupuk:", err.message);
-                res.status(500).send("Gagal menambahkan data pupuk.");
+                console.error("Error inserting data: " + err.message);
+                res.status(500).send("Gagal menyimpan data.");
                 return;
             }
-            console.log("Data pupuk berhasil ditambahkan:", result);
-            res.redirect("/pupuk");
+            res.send("Data pupuk berhasil ditambahkan.");
         }
     );
 });
 
-// Read (Menampilkan Data Pupuk)
+// Tampilkan data pupuk
 router.get("/", (req, res) => {
     db.query("SELECT * FROM pupuk", (err, results) => {
         if (err) {
-            console.error("Error saat mengambil data pupuk:", err.message);
-            res.status(500).send("Gagal mengambil data pupuk.");
+            console.error("Error fetching data: " + err.message);
+            res.status(500).send("Gagal mengambil data.");
             return;
         }
         res.render("pupuk", { pupuk: results });
-    });
-});
-
-// Update (Memperbarui Data Pupuk)
-router.post("/update/:id", (req, res) => {
-    const { id } = req.params;
-    const { nama, jenis, harga } = req.body;
-
-    db.query(
-        "UPDATE pupuk SET nama = ?, jenis = ?, harga = ? WHERE id = ?",
-        [nama, jenis, harga, id],
-        (err, result) => {
-            if (err) {
-                console.error("Error saat memperbarui data pupuk:", err.message);
-                res.status(500).send("Gagal memperbarui data pupuk.");
-                return;
-            }
-            console.log("Data pupuk berhasil diperbarui:", result);
-            res.redirect("/pupuk");
-        }
-    );
-});
-
-// Delete (Menghapus Data Pupuk)
-router.post("/delete/:id", (req, res) => {
-    const { id } = req.params;
-
-    db.query("DELETE FROM pupuk WHERE id = ?", [id], (err, result) => {
-        if (err) {
-            console.error("Error saat menghapus data pupuk:", err.message);
-            res.status(500).send("Gagal menghapus data pupuk.");
-            return;
-        }
-        console.log("Data pupuk berhasil dihapus:", result);
-        res.redirect("/pupuk");
     });
 });
 

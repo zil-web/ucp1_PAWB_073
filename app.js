@@ -5,12 +5,16 @@ const bodyParser = require('body-parser');
 const pupukRoutes = require('./src/routes/pupuk.js');
 const bibitRoutes = require('./src/routes/bibit.js');
 const path = require("path");
-
+const app = express();
 // Menentukan lokasi folder views
 app.set("views", path.join(__dirname, "src", "views"));
 
 // Mengatur view engine ke EJS
 app.set("view engine", "ejs");
+
+const pupukRouter = require("./src/routes/pupuk"); // Path ke pupuk.js
+app.use("/pupuk", pupukRouter);
+
 
 
 // Koneksi Database (ini bisa dipisah ke file lain untuk struktur yang lebih baik)
@@ -31,7 +35,7 @@ connection.connect((err) => {
 
 module.exports = connection;
 
-const app = express();
+
 
 
 
