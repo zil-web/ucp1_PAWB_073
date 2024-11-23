@@ -1,20 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const pupukRouter = require("./routes/pupuk");
 const bibitRouter = require("./routes/bibit");
-
+const pupukRouter = require('express').Router();
 const pupukRoutes = require('./src/routes/pupuk.js');
 const bibitRoutes = require('./src/routes/bibit.js');
 const path = require("path");
-const app = express();
 // Menentukan lokasi folder views
 app.set("views", path.join(__dirname, "src", "views"));
 
 // Mengatur view engine ke EJS
 app.set("view engine", "ejs");
 
-const pupukRouter = require("./src/routes/pupuk"); // Path ke pupuk.js
-app.use("/pupuk", pupukRouter);
+
 
 
 
@@ -39,11 +36,14 @@ module.exports = connection;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-const pupukRouter = require("./src/routes/pupuk"); 
+
 // Routes
 app.use("/pupuk", pupukRouter);
 app.use("/bibit", bibitRouter);
-const pupukRouter = require("./src/routes/pupuk"); 
+
+
+// Jangan mendeklarasikan pupukRouter lebih dari sekali
+
 // Jalankan Server
 app.listen(3000, () => {
     console.log("Server berjalan di http://localhost:3000");
